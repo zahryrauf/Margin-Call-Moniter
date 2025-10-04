@@ -1,1 +1,3 @@
 <p>Margin Call Monitor is a Laravel-based web application. It empowers brokers to efficiently manage trader details, monitor stock positions, calculate equities, and receive real-time alerts for potential margin calls. The platform features role-based dashboards for admins (to oversee users) and brokers (to handle traders), with AJAX-driven updates for seamless interactions. This project showcases flexibility, scalability, and practical applications in financial data management.</p>
+
+<span>When start to using this App Configure with your Database</span>
