@@ -14,6 +14,9 @@
                 <x-text-input id="email" name="email" type="email" class="mt-2 block w-full rounded-lg border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm" :value="old('email', $user->email)" required autocomplete="username" />
                 <x-input-error class="mt-2" :messages="$errors->get('email')" />
 
+                    <!-- Hidden role field so only admin can change it -->
+                    <input type="hidden" name="role" value="User">
+
                 @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
                     <div class="mt-2">
                         <p class="text-sm text-gray-800">
