@@ -90,16 +90,25 @@
                         <td class="px-4 py-2">{{ $trader->equity }}</td>
                         <td class="px-4 py-2 font-bold {{ $trader->status == 'ALERT' ? 'text-red-600' : 'text-green-700' }}">{{ $trader->status }}</td>
                         <td class="px-4 py-2 flex gap-2">
-                            <a href="{{ route('traders.edit', $trader->_id) }}" class="bg-yellow-400 hover:bg-yellow-500 text-white font-bold px-3 py-1 rounded shadow text-xs" onclick="return confirm('Are you sure you want to edit this trader?');">Edit</a>
-                            <form action="{{ route('traders.destroy', $trader->_id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this trader?');">
+                            <a href="{{ route('traders.edit', $trader->_id) }}" class="bg-yellow-400 hover:bg-yellow-500 text-white font-bold px-3 py-1 rounded shadow text-xs confirm-edit" data-href="{{ route('traders.edit', $trader->_id) }}">Edit</a>
+                            <form action="{{ route('traders.destroy', $trader->_id) }}" method="POST" style="display:inline;" class="confirm-delete">
                                 @csrf @method('DELETE')
-                                <button class="bg-red-500 hover:bg-red-600 text-white font-bold px-3 py-1 rounded shadow text-xs">Delete</button>
+                                <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-bold px-3 py-1 rounded shadow text-xs">Delete</button>
                             </form>
                         </td>
                     </tr>
                     @endforeach
                 </tbody>
             </table>
+        </div>
+    </div>
+<!-- Confirmation Modal -->
+<div id="confirm-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 hidden">
+    <div class="bg-white rounded-xl shadow-2xl p-8 max-w-md w-full text-center">
+        <div id="modal-message" class="text-lg font-semibold text-blue-800 mb-6">Are you sure?</div>
+        <div class="flex justify-center gap-6">
+            <button id="modal-yes" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-2 rounded-lg transition">Yes</button>
+            <button id="modal-no" class="bg-gray-200 hover:bg-gray-300 text-blue-700 font-bold px-6 py-2 rounded-lg transition">No</button>
         </div>
     </div>
 </div>
@@ -133,5 +142,46 @@ function resetTable() {
     document.getElementById('js-search-status').value = '';
     filterTable();
 }
+
+// Professional confirmation modal for Edit/Delete
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('confirm-modal');
+    const modalMsg = document.getElementById('modal-message');
+    const modalYes = document.getElementById('modal-yes');
+    const modalNo = document.getElementById('modal-no');
+    let confirmAction = null;
+
+    // Edit
+    document.querySelectorAll('.confirm-edit').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            modalMsg.textContent = 'Are you sure you want to edit this trader?';
+            modal.classList.remove('hidden');
+            confirmAction = function() {
+                window.location.href = btn.getAttribute('data-href');
+            };
+        });
+    });
+    // Delete
+    document.querySelectorAll('.confirm-delete').forEach(function(form) {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            modalMsg.textContent = 'Are you sure you want to delete this trader?';
+            modal.classList.remove('hidden');
+            confirmAction = function() {
+                form.submit();
+            };
+        });
+    });
+    // Modal buttons
+    modalYes.addEventListener('click', function() {
+        modal.classList.add('hidden');
+        if (confirmAction) confirmAction();
+    });
+    modalNo.addEventListener('click', function() {
+        modal.classList.add('hidden');
+        confirmAction = null;
+    });
+});
 </script>
 @endsection
