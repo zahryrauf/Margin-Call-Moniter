@@ -8,7 +8,7 @@
         <h2 class="text-3xl font-extrabold mb-8 text-blue-800 text-center tracking-tight">Broker Dashboard - Margin Call Monitoring</h2>
 
         <div class="mb-8 flex flex-col md:flex-row gap-4 md:gap-8 items-center justify-between">
-            <form method="POST" action="{{ route('stocks.updatePrice') }}" onsubmit="return confirm('Are you sure you want to update the price for this stock?');" class="flex flex-wrap gap-3 items-center bg-blue-50 rounded-lg px-4 py-3 shadow">
+            <form id="update-stock-form" method="POST" action="{{ route('stocks.updatePrice') }}" class="flex flex-wrap gap-3 items-center bg-blue-50 rounded-lg px-4 py-3 shadow">
                 @csrf
                 <label for="stock_name" class="text-blue-700 font-semibold mb-0">Update Stock Price:</label>
                 <select name="stock_name" id="stock_name" required
@@ -143,8 +143,22 @@ function resetTable() {
     filterTable();
 }
 
-// Professional confirmation modal for Edit/Delete
+// Professional confirmation modal for Edit/Delete/Stock Update
 document.addEventListener('DOMContentLoaded', function() {
+    // Stock Price Update
+    const stockForm = document.getElementById('update-stock-form');
+    if (stockForm) {
+        stockForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            modalMsg.textContent = 'Are you sure you want to update the price for this stock?';
+            modal.classList.remove('hidden');
+            window.lastModalAction = 'stock';
+            confirmAction = function() {
+                window.lastModalAction = null;
+                stockForm.submit();
+            };
+        });
+    }
     const modal = document.getElementById('confirm-modal');
     const modalMsg = document.getElementById('modal-message');
     const modalYes = document.getElementById('modal-yes');
@@ -181,6 +195,15 @@ document.addEventListener('DOMContentLoaded', function() {
     modalNo.addEventListener('click', function() {
         modal.classList.add('hidden');
         confirmAction = null;
+        // Remove focus from any button or field
+        if (document.activeElement) {
+            document.activeElement.blur();
+        }
+        // If the modal was triggered by the stock price update form, reset its fields
+        if (window.lastModalAction === 'stock') {
+            if (stockForm) stockForm.reset();
+        }
+        window.lastModalAction = null;
     });
 });
 </script>
