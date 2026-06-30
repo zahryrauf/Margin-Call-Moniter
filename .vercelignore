@@ -59,3 +59,7 @@ cache/
 # Temporary files
 tmp/
 temp/
+
+# Vercel Laravel deployment
+/vendor
+/public/index.php

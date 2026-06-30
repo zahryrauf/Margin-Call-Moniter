@@ -1,32 +1,24 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "build-vercel.sh",
-      "use": "@vercel/static-build",
-      "config": {
-        "installCommand": "",
-        "buildCommand": "bash build-vercel.sh",
-        "outputDirectory": "public"
-      }
+  "framework": null,
+  "functions": {
+    "api/index.php": {
+      "runtime": "vercel-php@0.6.1"
     }
-  ],
+  },
   "routes": [
     {
       "src": "/build/(.*)",
       "dest": "/public/build/$1"
     },
     {
-      "src": "/assets/(.*)",
-      "dest": "/public/assets/$1"
-    },
-    {
-      "src": "/favicon.ico",
-      "dest": "/public/favicon.ico"
+      "src": "/(css|js|images|assets)/(.*)",
+      "dest": "/public/$1/$2"
     },
     {
       "src": "/(.*)",
-      "dest": "/public/index.php"
+      "dest": "/api/index.php"
     }
-  ]
+  ],
+  "outputDirectory": "public"
 }
