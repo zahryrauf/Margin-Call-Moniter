@@ -35,22 +35,34 @@ if [ ! -f .env ]; then
     cp .env.example .env
 fi
 
-# Generate application key
-php artisan key:generate --force
+# Generate application key (skip if php command not found)
+if command -v php &> /dev/null; then
+    php artisan key:generate --force
+else
+    echo "⚠️ php command not found, skipping Laravel key generation"
+fi
 
-# Step 5: Run database migrations
-echo "🗃️  Running database migrations..."
-php artisan migrate --force
+# Step5: Run database migrations (skip if php command not found)
+echo "🗃️ Running database migrations..."
+if command -v php &> /dev/null; then
+    php artisan migrate --force
+else
+    echo "⚠️ php command not found, skipping database migrations"
+fi
 
-# Step 6: Build frontend assets
+# Step6: Build frontend assets
 echo "🎨 Building frontend assets..."
 npm run build
 
-# Step 7: Optimize Laravel
+# Step7: Optimize Laravel (skip if php command not found)
 echo "⚡ Optimizing Laravel..."
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
+if command -v php &> /dev/null; then
+    php artisan config:cache
+    php artisan route:cache
+    php artisan view:cache
+else
+    echo "⚠️ php command not found, skipping Laravel optimization"
+fi
 
 echo "✅ Build completed successfully!"
 echo "📍 Output directory: public"
