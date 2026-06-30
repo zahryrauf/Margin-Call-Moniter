@@ -2,11 +2,10 @@
   "version": 2,
   "builds": [
     {
-      "src": "build-vercel.sh",
-      "use": "@vercel/node",
+      "src": "index.php",
+      "use": "@vercel/php",
       "config": {
-        "installCommand": "",
-        "buildCommand": "bash build-vercel.sh"
+        "runtime": "php@8.2"
       }
     }
   ],
@@ -25,7 +24,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "/public/index.php"
+      "dest": "/index.php"
     }
   ]
 }
