@@ -1,16 +1,11 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "build-vercel.sh",
-      "use": "@vercel/static-build",
-      "config": {
-        "installCommand": "",
-        "buildCommand": "bash build-vercel.sh",
-        "outputDirectory": "public"
-      }
+  "framework": null,
+  "functions": {
+    "api/index.php": {
+      "runtime": "vercel-php@0.9.0"
     }
-  ],
+  },
   "routes": [
     {
       "src": "/build/(.*)",
@@ -22,7 +17,8 @@
     },
     {
       "src": "/(.*)",
-      "dest": "/public/index.php"
+      "dest": "/api/index.php"
     }
-  ]
+  ],
+  "outputDirectory": "public"
 }
