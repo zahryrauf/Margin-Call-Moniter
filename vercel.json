@@ -3,22 +3,29 @@
   "builds": [
     {
       "src": "build-vercel.sh",
-      "use": "@vercel/static-build",
+      "use": "@vercel/node",
       "config": {
         "installCommand": "",
-        "buildCommand": "bash build-vercel.sh",
-        "outputDirectory": "public"
+        "buildCommand": "bash build-vercel.sh"
       }
     }
   ],
   "routes": [
     {
       "src": "/build/(.*)",
-      "dest": "/build/$1"
+      "dest": "/public/build/$1"
+    },
+    {
+      "src": "/assets/(.*)",
+      "dest": "/public/assets/$1"
+    },
+    {
+      "src": "/favicon.ico",
+      "dest": "/public/favicon.ico"
     },
     {
       "src": "/(.*)",
-      "dest": "/index.php"
+      "dest": "/public/index.php"
     }
   ]
 }
