@@ -1,0 +1,61 @@
+# Dependencies
+node_modules/
+
+# Laravel
+bootstrap/cache/
+storage/*.key
+storage/debugbar/
+storage/framework/cache/
+storage/framework/sessions/
+storage/framework/views/
+storage/logs/
+.env
+.env.backup
+.env.production
+.phpunit.result.cache
+.phpactor.json
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing
+coverage/
+.phpunit.cache
+
+# Build
+build/
+dist/
+public/build/
+public/hot
+
+# Composer
+composer.lock
+vendor/
+
+# Git
+.git/
+.gitignore
+
+# Vercel
+.vercel/
+vercel.json
+vercel-build.sh
+
+# Logs
+*.log
+
+# Cache
+*.cache
+cache/
+
+# Temporary files
+tmp/
+temp/

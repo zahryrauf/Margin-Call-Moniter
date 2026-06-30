@@ -1,0 +1,17 @@
+{
+  "projectId": "margin-call-monitor",
+  "orgId": "your-org-id",
+  "settings": {
+    "framework": null,
+    "installCommand": "npm install",
+    "buildCommand": "bash vercel-build.sh",
+    "outputDirectory": "public",
+    "devCommand": "php artisan serve --host=0.0.0.0 --port=3000",
+    "nodeVersion": "18.x",
+    "git": {
+      "ignore": [
+        ".vercelignore"
+      ]
+    }
+  }
+}

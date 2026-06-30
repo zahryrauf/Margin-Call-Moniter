@@ -1,0 +1,57 @@
+name: Deploy to Vercel
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.x'
+          cache: 'npm'
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, ctype, fileinfo, tokenizer, pdo, mongodb
+          coverage: none
+
+      - name: Install dependencies
+        run: |
+          npm install
+          composer install --no-dev --optimize-autoloader
+
+      - name: Update browser data
+        run: |
+          npx update-browserslist-db@latest
+          npm install baseline-browser-mapping@latest --save-dev
+
+      - name: Build assets
+        run: |
+          npx update-browserslist-db@latest
+          npm install baseline-browser-mapping@latest --save-dev
+          npm run build
+
+      - name: Generate application key
+        run: php artisan key:generate --force
+
+      - name: Run migrations
+        run: php artisan migrate --force
+
+      - name: Deploy to Vercel
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-args: '--prod'
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          working-directory: .

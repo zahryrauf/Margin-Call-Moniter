@@ -1,0 +1,26 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "build-vercel.sh",
+      "use": "@vercel/static-build",
+      "config": {
+        "installCommand": "",
+        "buildCommand": "bash build-vercel.sh",
+        "outputDirectory": "public"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.php"
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.php"
+    }
+  ]
+}

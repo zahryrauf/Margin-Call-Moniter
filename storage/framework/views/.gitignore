@@ -1,2 +1,4 @@
+# View cache files should not be committed
 *
+!data/
 !.gitignore

@@ -3,6 +3,7 @@
     "private": true,
     "type": "module",
     "scripts": {
+        "prebuild": "npx update-browserslist-db@latest && npm install baseline-browser-mapping@latest --save-dev",
         "build": "vite build",
         "dev": "vite"
     },
@@ -12,6 +13,7 @@
         "alpinejs": "^3.4.2",
         "autoprefixer": "^10.4.2",
         "axios": "^1.11.0",
+        "baseline-browser-mapping": "^2.10.40",
         "concurrently": "^9.0.1",
         "laravel-vite-plugin": "^2.0.1",
         "postcss": "^8.4.31",

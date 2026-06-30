@@ -1,2 +1,4 @@
+# Session files should not be committed
 *
+!data/
 !.gitignore
