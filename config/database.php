@@ -31,9 +31,9 @@ return [
 
     'connections' => [
         'mongodb' => [
-            'driver'   => 'mongodb',
-            'dsn'     => env('DB_URI'),
-            'database' => env('DB_DATABASE'),
+            'driver' => 'mongodb',
+            'dsn' => env('DB_URI', 'mongodb+srv://<username>:<password>@cluster0.example.mongodb.net/margin_call_monitor?retryWrites=true&w=majority'),
+            'database' => env('DB_DATABASE', 'margin_call_monitor'),
             'options'  => [
                 'database' => env('DB_AUTHENTICATION_DATABASE', 'admin'), // required with Mongo 3+
             ],
@@ -66,9 +66,6 @@ return [
             'prefix_indexes' => true,
             'strict' => true,
             'engine' => null,
-            'options' => extension_loaded('pdo_mysql') ? array_filter([
-                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
-            ]) : [],
         ],
 
         'mariadb' => [
@@ -86,9 +83,6 @@ return [
             'prefix_indexes' => true,
             'strict' => true,
             'engine' => null,
-            'options' => extension_loaded('pdo_mysql') ? array_filter([
-                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
-            ]) : [],
         ],
 
         'pgsql' => [
